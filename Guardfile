@@ -69,7 +69,7 @@ guard :rspec, cmd: "rspec" do
   rails = dsl.rails(view_extensions: %w(erb haml slim))
   dsl.watch_spec_files_for(rails.app_files)
   dsl.watch_spec_files_for(rails.views)
-
+  
   watch(%r{^app/controllers/(.+)_(controller)\.rb$})  { "spec/features" }
   watch(%r{^app/models/(.+)\.rb$})  { "spec/features" }
   watch(rails.controllers) do |m|
@@ -82,7 +82,7 @@ guard :rspec, cmd: "rspec" do
 
   # Rails config changes
   watch(rails.spec_helper)     { rspec.spec_dir }
-  watch(rails.routes)          { "spec" } #{ "#{rspec.spec_dir}/routing" }
+  watch(rails.routes)          { "spec" } # { "#{rspec.spec_dir}/routing" }  
   watch(rails.app_controller)  { "#{rspec.spec_dir}/controllers" }
 
   # Capybara features specs

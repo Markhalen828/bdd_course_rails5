@@ -1,5 +1,10 @@
 class ArticlesController < ApplicationController
   def index
+    @articles = Article.all
+  end
+  
+  def show
+    @article = params[:id]
   end
   
   def new
