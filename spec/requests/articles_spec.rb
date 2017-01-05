@@ -63,4 +63,41 @@ RSpec.describe "Articles", type: :request do
       end
     end
   end
+  
+  describe 'DELETE /articles/:id' do
+    
+    context 'with non-signed in user' do
+      before { delete "/articles/#{ @article.id }" }
+      
+      it "redirect to signin page" do
+        expect(response.status).to eq 302
+        flash_message = "You need to sign in or sign up before continuing."
+        expect(flash[:alert]).to eq flash_message
+      end
+    end
+    
+    context 'with signed in user, who is non-owner' do
+      before do 
+        login_as(@Fred)
+        delete "/articles/#{ @article.id }"
+      end
+      
+      it "redirect to articles page" do
+        expect(response.status).to eq 302
+        flash_message = "You can only delete your own article."
+        expect(flash[:alert]).to eq flash_message
+      end
+    end
+    
+    context 'signed in user, who is owner' do
+      before do
+        login_as(@Steve)
+        delete "/articles/#{ @article.id }"
+      end
+      
+      it "successfully deletes article" do
+        expect(response.status).to eq 302
+      end
+    end
+  end
 end
