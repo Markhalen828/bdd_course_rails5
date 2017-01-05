@@ -4,6 +4,7 @@ RSpec.feature "Users signin" do
   before do
     @steve = User.create!(email: "steve@example.com", password: "password") 
   end
+  
   scenario "with valid credentials" do
   visit "/"
   
